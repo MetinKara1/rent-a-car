@@ -5,7 +5,7 @@ import useBreakpoint from "use-breakpoint";
 import Button from "@/components/Button/index";
 import Delivery from "@/components/Delivery";
 import { useIcons } from "@/components/icons/use-icon";
-import { BREAKPOINTS } from "@/utils/helpers";
+import { BREAKPOINTS, urlParamsToArray } from "@/utils/helpers";
 import CardVechile from "../../components/Card/index";
 import Filter from "@/components/Search/Filter";
 import DeliverySkeleton from "@/components/DeliverySkeleton";
@@ -18,11 +18,16 @@ const Search = (props: any) => {
   const [loading, setLoading] = useState(false);
   const params = useSearchParams();
   const searchTerms = params.get("search");
-  const allParams: { [anyProp: string]: string } = {};
+  // const allParams: { [anyProp: string]: string } = {};
+  const [allParams, setAllParams] = useState<{ [anyProp: string]: string }>({});
 
   params.forEach((value: any, key: any) => {
-    allParams[key] = value;
+    // allParams[key] = value;
+
+    setAllParams((prev) => ({ ...prev, [key]: value }));
   });
+
+  console.log("*** all params: ", allParams);
 
   let allSearchTerms: any = Object.entries(allParams).map(function (value) {
     return value[0] + "=" + value[1];
@@ -50,24 +55,15 @@ const Search = (props: any) => {
 
   useEffect(() => {
     setLoading(true);
+    let serviceFilterParamList: any = [];
+    let allServiceParams = { ...allParams };
 
-    let filterArray: any = [];
-    let allQueries = allSearchTerms;
-    if (allQueries.includes("&")) {
-      let filters = allQueries.split("&");
-      console.log("filterss: ", filters);
-
-      filters.map((item: any) => {
-        let key = item.split("=")[0];
-        let value = item.split("=")[1];
-        filterArray.push({
-          field: key,
-          values: value.includes("_") ? value.split("_") : [value],
-        });
-      });
-
-      console.log("*** filter array: ", filterArray);
+    if (allServiceParams) {
+      // if (allParams?.search) delete allParams.search;
+      serviceFilterParamList = urlParamsToArray(allServiceParams);
     }
+
+    console.log("*** all: ", allServiceParams);
 
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Filters`, {
       method: "POST",
@@ -81,7 +77,7 @@ const Search = (props: any) => {
         // setFilters(response.filters);
       }, 3000);
     });
-  }, [searchTerms, allSearchTerms]);
+  }, [allParams]);
 
   useEffect(() => {
     setLoading(true);

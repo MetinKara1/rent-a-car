@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+https://www.figma.com/design/xfOszLiCm65SQObmdg3d5X/Car-Rent-Website-Design---Pickolab-Studio-(Community)?node-id=1-3&p=f&t=2Byqfqkg4Epx3OZE-0
+
 ## Getting Started
 
 First, run the development server:
