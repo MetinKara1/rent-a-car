@@ -5,7 +5,7 @@ import useBreakpoint from "use-breakpoint";
 import Button from "@/components/Button/index";
 import Delivery from "@/components/Delivery";
 import { useIcons } from "@/components/icons/use-icon";
-import { BREAKPOINTS } from "@/utils/helpers";
+import { BREAKPOINTS, urlParamsToArray } from "@/utils/helpers";
 import CardVechile from "../../components/Card/index";
 import Filter from "@/components/Search/Filter";
 import DeliverySkeleton from "@/components/DeliverySkeleton";
@@ -14,28 +14,91 @@ import FilterSkeleton from "@/components/Search/FilterSkeleton";
 
 const Search = (props: any) => {
   const [cars, setCars] = useState<any>([]);
+  const [filters, setFilters] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const params = useSearchParams();
   const searchTerms = params.get("search");
+  // const allParams: { [anyProp: string]: string } = {};
+  const [allParams, setAllParams] = useState<{ [anyProp: string]: string }>({});
+
+  params.forEach((value: any, key: any) => {
+    // allParams[key] = value;
+
+    setAllParams((prev) => ({ ...prev, [key]: value }));
+  });
+
+  console.log("*** all params: ", allParams);
+
+  let allSearchTerms: any = Object.entries(allParams).map(function (value) {
+    return value[0] + "=" + value[1];
+  });
+
+  if (allSearchTerms?.length > 1) allSearchTerms = allSearchTerms.join("&");
+  else allSearchTerms = allSearchTerms.toString();
+
+  console.log("*** allSearchTerms: ", allSearchTerms);
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/search?search=${searchTerms}`).then(async (res) => {
+    fetch(`/api/search?search=${searchTerms}&${allSearchTerms || ""}`).then(
+      async (res) => {
+        const response = await res.json();
+        console.log("search response: ", response);
+        setTimeout(() => {
+          setLoading(false);
+          setCars(response.cars);
+          // setFilters(response.filters);
+        }, 3000);
+      }
+    );
+  }, [searchTerms, allSearchTerms]);
+
+  useEffect(() => {
+    setLoading(true);
+    let serviceFilterParamList: any = [];
+    let allServiceParams = { ...allParams };
+
+    if (allServiceParams) {
+      // if (allParams?.search) delete allParams.search;
+      serviceFilterParamList = urlParamsToArray(allServiceParams);
+    }
+
+    console.log("*** all: ", allServiceParams);
+
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Filters`, {
+      method: "POST",
+      body: "",
+    }).then(async (res) => {
       const response = await res.json();
       console.log("search response: ", response);
       setTimeout(() => {
         setLoading(false);
-        setCars(response);
+        // setCars(response.cars);
+        // setFilters(response.filters);
       }, 3000);
     });
-  }, [searchTerms]);
+  }, [allParams]);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Filters`)
+      .then(async (res) => {
+        const data = await res.json();
+        console.log("*** filters response: ", data);
+        setFilters(data);
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        console.log("*** err: ", err);
+      });
+  }, []);
 
   const { breakpoint } = useBreakpoint(BREAKPOINTS);
   const { SwapIcon } = useIcons();
   return (
     <div className="flex h-full w-full justify-center">
       <div className="mobile:hidden laptop:block">
-        {loading ? <FilterSkeleton /> : <Filter />}
+        {loading ? <FilterSkeleton /> : <Filter filters={filters} />}
       </div>
       <div className="mobile:px-6 laptop:px-8 flex-col items-center w-full">
         <div className="mt-8 laptop:flex desktop:flex-row mobile:flex mobile:flex-col w-full items-center laptop:gap-8 desktop:gap-8">

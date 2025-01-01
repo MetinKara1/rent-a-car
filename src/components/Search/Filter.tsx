@@ -1,9 +1,14 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Checkbox from "../Checkbox/index";
 import Skeleton from "../Skeleton/index";
 
-const Filter = () => {
+const Filter = ({ filters }: any) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const params = useSearchParams();
+  console.log("filters: ", filters);
   const [loading, setLoading] = useState(false);
   const skeletonArr = [
     {
@@ -132,21 +137,30 @@ const Filter = () => {
     },
   ]);
 
-  const onFilterClick = (filterName: string, id: number) => {
-    setFilterList((prevData) =>
-      prevData.map((filter) =>
-        filter.filterName === filterName
-          ? {
-              ...filter,
-              list: filter.list.map((item) =>
-                item.id === id
-                  ? { ...item, name: item.name, selected: !item.selected }
-                  : item
-              ),
-            }
-          : filter
-      )
-    );
+  const onFilterClick = (title: string, text: string, id: number) => {
+    const searchParams = new URLSearchParams(params.toString());
+    if (params.toString().includes(title.toLowerCase())) {
+      let newTitle = params.get(title.toLowerCase());
+      let newTitleValue: string = "";
+      if (newTitle?.includes(text.toLowerCase())) {
+        if (newTitle.includes("_")) {
+          let titleValuesArr = newTitle.split("_");
+          titleValuesArr = titleValuesArr.filter(
+            (x: any) => x !== text.toLowerCase()
+          );
+          newTitleValue = titleValuesArr.join("_");
+        }
+      } else {
+        newTitleValue = newTitle + "_" + text.toLowerCase();
+      }
+
+      searchParams.set(title.toLowerCase(), newTitleValue);
+
+      router.push(pathname + "?" + searchParams);
+    } else {
+      searchParams.set(title.toLowerCase(), text.toLowerCase());
+      router.push(pathname + "?" + searchParams);
+    }
   };
 
   return (
@@ -185,25 +199,27 @@ const Filter = () => {
                 ))}
               </div>
             ))
-          : filterList.map((item, i) => {
+          : filters.map((item: any, i: number) => {
               return (
                 <div key={i}>
-                  <p className="text-xs text-[#90A3BF] mb-7">
-                    {item.filterName}
-                  </p>
-                  {item.list.map((filterItem) => {
+                  <p className="text-xs text-[#90A3BF] mb-7">{item.title}</p>
+                  {item.filterTypes.map((filterItem: any) => {
                     return (
                       <div
                         className="mb-8"
                         key={filterItem.id}
                         onClick={() =>
-                          onFilterClick(item.filterName, filterItem.id)
+                          onFilterClick(
+                            item.title,
+                            filterItem.text,
+                            filterItem.id
+                          )
                         }
                       >
                         <Checkbox
-                          label={filterItem.name}
+                          label={filterItem.text}
                           count={10}
-                          value={filterItem.selected}
+                          value={filterItem.is_selected}
                         />
                       </div>
                     );

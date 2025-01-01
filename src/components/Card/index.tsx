@@ -59,9 +59,7 @@ const Card = (props: { item: CardProps }) => {
               </div>
               <div className="flex items-center gap-[6px]">
                 <TwoUserIcon />
-                <p className="mobile:text-xs tablet:text-md">
-                  {item.capacity} People
-                </p>
+                <p className="mobile:text-xs tablet:text-md">{item.capacity}</p>
               </div>
             </div>
           </div>

@@ -22,6 +22,7 @@ import FilterSkeleton from "@/components/Search/FilterSkeleton";
 
 const CarDetail = (props: any) => {
   const [loading, setLoading] = useState(false);
+  const [filters, setFilters] = useState<any>([]);
   console.log("propsss: ", props);
   const { breakpoint } = useBreakpoint(BREAKPOINTS);
   const { ArrowDownIcon, StarIcon, StarOutlineIcon } = useIcons();
@@ -46,11 +47,25 @@ const CarDetail = (props: any) => {
     });
   }, []);
 
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Filters`)
+      .then(async (res) => {
+        const data = await res.json();
+        console.log("*** filters response: ", data);
+        setFilters(data);
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        console.log("*** err: ", err);
+      });
+  }, []);
+
   return (
     <div>
       <div className="flex h-full w-full justify-center">
         <div className="mobile:hidden laptop:block">
-          {loading ? <FilterSkeleton /> : <Filter />}
+          {loading ? <FilterSkeleton /> : <Filter filters={filters} />}
         </div>
         <div className="">
           <div className="w-full mobile:flex mobile:flex-col desktop:flex desktop:flex-row gap-8 mobile:px-6 laptop:px-8">

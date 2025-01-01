@@ -4,7 +4,7 @@ export const cars = [
         searchKey: "rolls-royce",
         name: "Rolls Royce",
         detail: "NISMO has become the embodiment of Nissans outstanding performance, inspired by the most unforgiving proving ground, the race track.",
-        type: "Sport",
+        type: "Sedan",
         steering: "Manual",
         imageUrl: "/rolls-royce.png",
         images: [
@@ -24,7 +24,7 @@ export const cars = [
                 url: "/car-detail-2.png"
             }
         ],
-        capacity: 2,
+        capacity: "2 Person",
         gas: "70L",
         price: "$96.00",
         reviews: [
@@ -70,7 +70,7 @@ export const cars = [
                 url: "/car-detail-2.png"
             }
         ],
-        capacity: 2,
+        capacity: "2 Person",
         gas: "70L",
         price: "$96.00",
         reviews: [
@@ -116,7 +116,7 @@ export const cars = [
                 url: "/car-detail-2.png"
             }
         ],
-        capacity: 2,
+        capacity: "4 Person",
         gas: "70L",
         price: "$96.00",
         reviews: [
@@ -142,7 +142,7 @@ export const cars = [
         searchKey: "all-new-rush",
         name: "All New Rush",
         detail: "NISMO has become the embodiment of Nissans outstanding performance, inspired by the most unforgiving proving ground, the race track.",
-        type: "Sport",
+        type: "SUV",
         steering: "Manual",
         imageUrl: "/all-new-rush.png",
         images: [
@@ -162,7 +162,7 @@ export const cars = [
                 url: "/car-detail-2.png"
             }
         ],
-        capacity: 2,
+        capacity: "6 Person",
         gas: "70L",
         price: "$96.00",
         reviews: [
@@ -208,7 +208,7 @@ export const cars = [
                 url: "/car-detail-2.png"
             }
         ],
-        capacity: 2,
+        capacity: "8 Person",
         gas: "70L",
         price: "$96.00",
         reviews: [
@@ -230,3 +230,99 @@ export const cars = [
         reviewCount: 1903
     }
 ];
+
+export const filters = [
+    {
+        id: 1,
+        title: "Type",
+        list: [
+            {
+                id: 1,
+                text: "Sport",
+                is_selected: false
+            },
+            {
+                id: 2,
+                text: "SUV",
+                is_selected: false
+            },
+            {
+                id: 3,
+                text: "MPV",
+                is_selected: false
+            },
+            {
+                id: 4,
+                text: "Sedan",
+                is_selected: false
+            },
+            {
+                id: 5,
+                text: "Coupe",
+                is_selected: false
+            },
+            {
+                id: 6,
+                text: "Hatchback",
+                is_selected: false
+            }
+        ]
+    },
+    {
+        id: 2,
+        title: "Capacity",
+        list: [
+            {
+                id: 1,
+                text: "2 Person",
+                is_selected: false
+            },
+            {
+                id: 2,
+                text: "4 Person",
+                is_selected: false
+            },
+            {
+                id: 3,
+                text: "6 Person",
+                is_selected: false
+            },
+            {
+                id: 4,
+                text: "8 Person",
+                is_selected: false
+            }
+        ]
+    },
+    {
+        id: 3,
+        title: "Price",
+        list: [
+            {
+                id: 1,
+                text: "$20.00",
+                is_selected: false
+            },
+            {
+                id: 2,
+                text: "$40.00",
+                is_selected: false
+            },
+            {
+                id: 3,
+                text: "$60.00",
+                is_selected: false
+            },
+            {
+                id: 4,
+                text: "$80.00",
+                is_selected: false
+            },
+            {
+                id: 5,
+                text: "$100.00",
+                is_selected: false
+            }
+        ]
+    }
+]

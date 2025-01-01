@@ -34,21 +34,7 @@ const CarDetailSkeleton = () => {
           baseColor="#EFF3FD"
           highlightColor="#FFF"
           borderRadius={30}
-          count={1}
-          wrapClassName="w-full"
-        />
-        <Skeleton
-          baseColor="#EFF3FD"
-          highlightColor="#FFF"
-          borderRadius={30}
-          count={1}
-          wrapClassName="w-full"
-        />
-        <Skeleton
-          baseColor="#EFF3FD"
-          highlightColor="#FFF"
-          borderRadius={30}
-          count={1}
+          count={3}
           wrapClassName="w-full"
         />
         <div className="mobile:mt-4 tablet:mt-8 mobile:text-xs tablet:text-xl">

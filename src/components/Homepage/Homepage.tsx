@@ -15,16 +15,30 @@ import DeliverySkeleton from "../DeliverySkeleton";
 const Homepage = () => {
   const [cars, setCars] = useState<any>([]);
   const [loading, setLoading] = useState(false);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   fetch("/api/car").then(async (res) => {
+  //     const data = await res.json();
+  //     console.log("response: ", data);
+  //     setTimeout(() => {
+  //       setCars(data);
+  //       setLoading(false);
+  //     }, 3000);
+  //   });
+  // }, []);
+
   useEffect(() => {
     setLoading(true);
-    fetch("/api/car").then(async (res) => {
-      const data = await res.json();
-      console.log("response: ", data);
-      setTimeout(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Cars`)
+      .then(async (res) => {
+        const data = await res.json();
+        console.log("*** service response: ", data);
         setCars(data);
         setLoading(false);
-      }, 3000);
-    });
+      })
+      .catch((err: any) => {
+        console.log("*** err: ", err);
+      });
   }, []);
 
   const { breakpoint } = useBreakpoint(BREAKPOINTS);
