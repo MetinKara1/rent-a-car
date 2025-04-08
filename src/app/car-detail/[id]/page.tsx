@@ -29,37 +29,37 @@ const CarDetail = (props: any) => {
   const [cars, setCars] = useState<any>([]);
   const [carDetail, setCarDetail] = useState<any>({});
 
-  useEffect(() => {
-    setLoading(true);
-    fetch("/api/car").then(async (res) => {
-      const response = await res.json();
-      console.log("response: ", response);
-      setTimeout(() => {
-        setCars(response);
-        setLoading(false);
-      }, 3000);
-    });
+  // useEffect(() => {
+  //   setLoading(true);
+  //   fetch("/api/car").then(async (res) => {
+  //     const response = await res.json();
+  //     console.log("response: ", response);
+  //     setTimeout(() => {
+  //       setCars(response);
+  //       setLoading(false);
+  //     }, 3000);
+  //   });
 
-    fetch(`/api/car-detail?id=${props.params?.id}`).then(async (res) => {
-      const response = await res.json();
-      console.log("car detaillll: ", response);
-      setCarDetail(response);
-    });
-  }, []);
+  //   fetch(`/api/car-detail?id=${props.params?.id}`).then(async (res) => {
+  //     const response = await res.json();
+  //     console.log("car detaillll: ", response);
+  //     setCarDetail(response);
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    setLoading(true);
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Filters`)
-      .then(async (res) => {
-        const data = await res.json();
-        console.log("*** filters response: ", data);
-        setFilters(data);
-        setLoading(false);
-      })
-      .catch((err: any) => {
-        console.log("*** err: ", err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Filters`)
+  //     .then(async (res) => {
+  //       const data = await res.json();
+  //       console.log("*** filters response: ", data);
+  //       setFilters(data);
+  //       setLoading(false);
+  //     })
+  //     .catch((err: any) => {
+  //       console.log("*** err: ", err);
+  //     });
+  // }, []);
 
   return (
     <div>

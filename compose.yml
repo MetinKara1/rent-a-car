@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
       args:
-        APP_NODE_ENV: production
+        APP_NODE_ENV: .production
     environment:
       - NODE_ENV=production
     ports:
@@ -20,7 +20,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
       args:
-        APP_NODE_ENV: test
+        APP_NODE_ENV: .test
     environment:
       - NODE_ENV=test
     ports:

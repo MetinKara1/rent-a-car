@@ -27,19 +27,19 @@ const Homepage = () => {
   //   });
   // }, []);
 
-  useEffect(() => {
-    setLoading(true);
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Cars`)
-      .then(async (res) => {
-        const data = await res.json();
-        console.log("*** service response: ", data);
-        setCars(data);
-        setLoading(false);
-      })
-      .catch((err: any) => {
-        console.log("*** err: ", err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Cars`)
+  //     .then(async (res) => {
+  //       const data = await res.json();
+  //       console.log("*** service response: ", data);
+  //       setCars(data);
+  //       setLoading(false);
+  //     })
+  //     .catch((err: any) => {
+  //       console.log("*** err: ", err);
+  //     });
+  // }, []);
 
   const { breakpoint } = useBreakpoint(BREAKPOINTS);
   const { SwapIcon } = useIcons();

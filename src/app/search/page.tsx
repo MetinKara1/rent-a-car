@@ -53,31 +53,31 @@ const Search = (props: any) => {
     );
   }, [searchTerms, allSearchTerms]);
 
-  useEffect(() => {
-    setLoading(true);
-    let serviceFilterParamList: any = [];
-    let allServiceParams = { ...allParams };
+  // useEffect(() => {
+  //   setLoading(true);
+  //   let serviceFilterParamList: any = [];
+  //   let allServiceParams = { ...allParams };
 
-    if (allServiceParams) {
-      // if (allParams?.search) delete allParams.search;
-      serviceFilterParamList = urlParamsToArray(allServiceParams);
-    }
+  //   if (allServiceParams) {
+  //     // if (allParams?.search) delete allParams.search;
+  //     serviceFilterParamList = urlParamsToArray(allServiceParams);
+  //   }
 
-    console.log("*** all: ", allServiceParams);
+  //   console.log("*** all: ", allServiceParams);
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Filters`, {
-      method: "POST",
-      body: "",
-    }).then(async (res) => {
-      const response = await res.json();
-      console.log("search response: ", response);
-      setTimeout(() => {
-        setLoading(false);
-        // setCars(response.cars);
-        // setFilters(response.filters);
-      }, 3000);
-    });
-  }, [allParams]);
+  //   fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Filters`, {
+  //     method: "POST",
+  //     body: "",
+  //   }).then(async (res) => {
+  //     const response = await res.json();
+  //     console.log("search response: ", response);
+  //     setTimeout(() => {
+  //       setLoading(false);
+  //       // setCars(response.cars);
+  //       // setFilters(response.filters);
+  //     }, 3000);
+  //   });
+  // }, [allParams]);
 
   useEffect(() => {
     setLoading(true);
